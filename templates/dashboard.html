@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AutoActionHub</title>
+    <meta name="description" content="AutoActionHub Dashboard where users can create, share and manage posts related to automobiles.">
+    <link rel="canonical" href="https://www.autoactionhub.com/dashboard" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .card {
+            border-top: 5px solid #428bca;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+        }
+
+        .card h2,
+        .card h3 {
+            color: #428bca;
+        }
+
+        .carousel-inner img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+        }
+
+        .btn-success,
+        .btn-danger,
+        .btn-secondary {
+            color: #fff;
+        }
+
+        .btn-group form {
+            display: inline;
+        }
+
+        .btn-primary {
+            margin-top: 20px;
+        }
+
+        .vote-counter {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            aspect-ratio: 16 / 9;
+            /* modern browsers support this property */
+        }
+
+
+        .carousel-item .carousel-content {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-size: cover;
+            background-position: center center;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            padding-top: 56.25%;
+            /* 16:9 Aspect Ratio */
+        }
+        .sticky {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0; /* required */
+        }
+        
+    </style>
+</head>
+
+<body>
+    {% include 'nav.html' %}
+    <main>
+        <div class="container mt-5">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <!-- Carousel -->
+                    <div id="carouselExampleIndicators" class="carousel slide mb-4" data-bs-ride="carousel">
+
+                        <div class="carousel-inner" id="carousel-inner"></div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                            data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                    <!-- Create Post -->
+                    <div class="card p-4 mb-4">
+                        <div class="card-body">
+                            <h2>Create a New Post</h2>
+                            <form method="POST" action="/dashboard">
+                                <div class="form-group">
+                                    <label for="title">Title:</label>
+                                    <input type="text" class="form-control" id="title" name="title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="content">Content:</label>
+                                    <textarea class="form-control" id="content" name="content" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Create Post</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Posts -->
+                    <div class="posts-container" style="height: auto; overflow: visible;">
+                        <h2>Posts</h2>
+                        {% for post in posts %}
+                        <div class="card mb-4 p-3">
+                            <div class="row">
+                                <!-- Voting Controls Column -->
+                                <div class="col-auto d-flex flex-column align-items-center voting-controls" style="position: sticky; top: 10px;">
+                                    <form method="POST" action="/post/{{ post.id }}/upvote">
+                                        <button class="btn btn-success" type="submit">&#x25B2;</button>
+                                    </form>
+                                    <div class="vote-counter bg-white rounded-circle py-2 px-3 mb-2">{{ post.upvotes - post.downvotes }}
+                                    </div>
+                                    <form method="POST" action="/post/{{ post.id }}/downvote">
+                                        <button class="btn btn-danger" type="submit">&#x25BC;</button>
+                                    </form>
+                                    {% if post.user_email == current_user_email %}
+                                    <form method="POST" action="/delete/{{ post.id }}">
+                                        <button class="btn btn-secondary mt-2" type="submit">&#x1F5D1;</button>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                                <!-- Post Details Column -->
+                                <div class="col">
+                                    <article>
+                                        <h3 class="card-title">{{ post.title }} <span class="text-muted">by {{ post.user_email }}</span>
+                                        </h3>
+                                        <p class="card-text">{{ post.content|replace('\n', '<br>')|safe }} </p>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    {% include 'footer.html' %}
+    <!-- Bootstrap Bundle with Popper.js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <!-- Custom JavaScript -->
+    <script>
+        $(document).ready(function () {
+            $.getJSON('/image-files', function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var imageUrl = '/static' + data[i];
+                    var carouselItem = $('<div class="carousel-item' + (i === 0 ? ' active' : '') + '">');
+                    var image = $('<img class="d-block w-100">');
+                    image.attr('src', imageUrl);
+                    carouselItem.append(image);
+                    $('#carousel-inner').append(carouselItem);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
