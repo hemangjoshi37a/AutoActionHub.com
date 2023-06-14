@@ -4,7 +4,7 @@ AutoActionHub.com is a dynamic online platform dedicated to the auto sales indus
 
 ## 📚 Table of Contents
 
-- [� AutoActionHub.com](#-autoactionhubcom)
+- [🚀 AutoActionHub.com](#-autoactionhubcom)
   - [📚 Table of Contents](#-table-of-contents)
   - [🗂️ Directory Structure](#️-directory-structure)
   - [⭐ Features](#-features)
@@ -21,7 +21,6 @@ Here is the directory tree of the AutoActionHub.com project:
 ./
 ├── config.py
 ├── instance
-│   ├── _users.db
 │   └── users.db
 ├── LICENSE
 ├── main.py
@@ -66,24 +65,13 @@ To run AutoActionHub.com on your local machine, follow these steps:
    $ cd AutoActionHub.com
    ```
 
-3. Install the dependencies:
-
-   ```shell
-   $ pip install -r requirements.txt
-   ```
-
-4. Set up the database:
-
-   - Rename the `instance/_users.db` file to `instance/users.db`.
-   - Configure the database URI in the `config.py` file.
-
-5. Start the application:
+3. Start the application:
 
    ```shell
    $ python main.py
    ```
 
-6. Access AutoActionHub.com in your web browser at `http://localhost:5000`.
+4. Access AutoActionHub.com in your web browser at `http://localhost:5001`.
 
 ## 👩‍💻 Usage
 
@@ -91,9 +79,7 @@ To run AutoActionHub.com on your local machine, follow these steps:
 2. Explore the home page to view the latest posts and discussions.
 3. Join existing discussions or start a new one by creating a post.
 4. Engage with the community by commenting on posts and voting on them.
-5
-
-. Discover new insights, ideas, and strategies shared by other members.
+5. Discover new insights, ideas, and strategies shared by other members.
 6. Customize your profile and preferences to enhance your experience.
 7. Stay connected with the auto sales industry and grow your network.
 
