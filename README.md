@@ -4,7 +4,7 @@ AutoActionHub.com is a dynamic online platform dedicated to the auto sales indus
 
 ## 📚 Table of Contents
 
-- [� AutoActionHub.com](#-autoactionhubcom)
+- [🚘 AutoActionHub.com](#-autoactionhubcom)
   - [📚 Table of Contents](#-table-of-contents)
   - [🗂️ Directory Structure](#️-directory-structure)
   - [⭐ Features](#-features)
@@ -56,7 +56,7 @@ To run AutoActionHub.com on your local machine, follow these steps:
 1. Clone the repository:
 
    ```shell
-   $ git clone https://github.com/your-username/AutoActionHub.com.git
+   $ git clone https://github.com/hemangjoshi37a/AutoActionHub.com
    ```
 
 2. Navigate to the project directory:
