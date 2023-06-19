@@ -1,3 +1,4 @@
+your_private.key
 config.py
 __pycache__
 originCert/your_domain.crt
@@ -6,4 +7,3 @@ key.pem
 your_domain.pem
 instance/users.db
 originCert/your_private.key
-your_private.key
