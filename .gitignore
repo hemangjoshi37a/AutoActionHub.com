@@ -6,3 +6,4 @@ key.pem
 your_domain.pem
 instance/users.db
 originCert/your_private.key
+your_private.key
