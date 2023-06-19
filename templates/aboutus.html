@@ -10,24 +10,63 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
     <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+        }
+
         h1, h2, h3 {
+            color: #333;
             transition: color 0.3s ease;
         }
+
         h1:hover, h2:hover, h3:hover {
             color: #007bff;
         }
+
         .fab {
             transition: color 0.3s ease;
         }
+
         .fab:hover {
             color: #007bff;
         }
+
         .rounded-circle {
             object-fit: cover;
             margin: 15px;
         }
+
         p {
             font-size: 18px;
+        }
+
+        .bg-light {
+            border-radius: 15px;
+            box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 4px 6px 0 hsla(0, 0%, 0%, 0.2);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 15px 0 hsla(0, 0%, 0%, 0.2);
+        }
+
+        .card .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-img {
+            width: 80%;
+            margin-top: 15px;
         }
     </style>
 </head>
@@ -35,55 +74,43 @@
 <body>
     {% include 'nav.html' %}
 
-    <div class="container">
-        <div class="row my-5">
-            <div class="col-lg-12">
-                <h1 class="text-center text-primary">🏁 About Us 🏁</h1>
-            </div>
+    <div class="container mt-5">
+        <div class="text-center mb-5">
+            <h1 class="text-primary">🏁 About Us 🏁</h1>
         </div>
 
-        <div class="row">
-            <div class="col-lg-12 bg-light p-4 rounded">
-                <div class="mb-4">
-                    <h2 class="text-secondary">Revolutionizing the Auto Industry 🚘</h2>
-                    <p class="text-dark">
-                        We are passionately committed to creating unprecedented growth in the auto industry. Our strategies are designed to help businesses reach their full potential and achieve higher sales in the auto industry.
-                    </p>
-                </div>
-                <div class="mb-4">
-                    <h2 class="text-secondary">Our Expertise 🎯</h2>
-                    <p class="text-dark">
-                        With years of experience under our belt, our expert team understands the dynamics of the auto industry. Our unique insights empower us to design effective action plans tailored to the needs of our clients.
-                    </p>
-                </div>
-                <div>
-                    <h2 class="text-secondary">Driving Success 🚀</h2>
-                    <p class="text-dark">
-                        We believe in driving success through innovation and dedication. We're focused on taking action and achieving concrete results. Our success is reflected in the growth and prosperity of our clients in the auto industry.
-                    </p>
-                </div>
-            </div>
+        <div class="bg-light p-4 rounded mb-5">
+            <h2 class="text-secondary">Revolutionizing the Auto Industry 🚘</h2>
+            <p class="text-dark">
+                We are passionately committed to creating unprecedented growth in the auto industry. Our strategies are designed to help businesses reach their full potential and achieve higher sales in the auto industry.
+            </p>
+
+            <h2 class="text-secondary mt-4">Our Expertise 🎯</h2>
+            <p class="text-dark">
+                With years of experience under our belt, our expert team understands the dynamics of the auto industry. Our unique insights empower us to design effective action plans tailored to the needs of our clients.
+            </p>
+
+            <h2 class="text-secondary mt-4">Driving Success 🚀</h2>
+            <p class="text-dark">
+                We believe in driving success through innovation and dedication. We're focused on taking action and achieving concrete results. Our success is reflected in the growth and prosperity of our clients in the auto industry.
+            </p>
         </div>
 
-        <div class="row mt-5">
-            <div class="col-lg-6">
-                <div class="card mb-3">
-                    <div class="row no-gutters">
-                        <div class="col-md-4 d-flex align-items-center justify-content-center">
-                            <img src="static/img/dp/parbat.jpeg" class="card-img rounded-circle" alt="Profile Image of Parbat Sindhal">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h3 class="card-title">Parbat Sindhal</h3>
-                                <p class="card-text"><strong>Position: </strong>Deputy Manager at TVS Motor</p>
-                                <p class="card-text"><strong>Education: </strong>Sardar Vallabhbhai National Institute of Technology, Surat</p>
-                                <p class="card-text"><strong>Location: </strong>Vadodara, Gujarat, India</p>
-                                <p class="card-text"><strong>About: </strong>I am a competent, achievement-driven professional offering over 6 years of experience in Channel Management, Sales, Business Development, Technical Support & Maintenance, Client Relationship Management, and Team Management.</p>
-                                <a href="https://www.linkedin.com/in/parbat-sindhal-397a68128/" target="_blank">
-                                    <i class="fab fa-linkedin fa-2x"></i>
-                                </a>
-                            </div>
-                        </div>
+        <div class="card mb-3">
+            <div class="row no-gutters">
+                <div class="col-md-4 d-flex align-items-center justify-content-center">
+                    <img src="static/img/dp/parbat.jpeg" class="card-img rounded-circle" alt="Profile Image of Parbat Sindhal">
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <h3 class="card-title">Parbat Sindhal</h3>
+                        <p class="card-text"><strong>Position: </strong>Deputy Manager at TVS Motor</p>
+                        <p class="card-text"><strong>Education: </strong>Sardar Vallabhbhai National Institute of Technology, Surat</p>
+                        <p class="card-text"><strong>Location: </strong>Vadodara, Gujarat, India</p>
+                        <p class="card-text"><strong>About: </strong>I am a competent, achievement-driven professional offering over 6 years of experience in Channel Management, Sales, Business Development, Technical Support & Maintenance, Client Relationship Management, and Team Management.</p>
+                        <a href="https://www.linkedin.com/in/parbat-sindhal-397a68128/" target="_blank">
+                            <i class="fab fa-linkedin fa-2x"></i>
+                        </a>
                     </div>
                 </div>
             </div>

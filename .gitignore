@@ -1,2 +1,8 @@
 config.py
 __pycache__
+originCert/your_domain.crt
+crt.pem
+key.pem
+your_domain.pem
+instance/users.db
+originCert/your_private.key

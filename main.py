@@ -21,9 +21,12 @@ app.static_folder = 'static'
 
 db = SQLAlchemy(app)
 
+
+
 DATA = {
     'response_type': "code",
-    'redirect_uri': "https://localhost:5001/home",
+    # 'redirect_uri': "https://localhost:5001/home",
+    'redirect_uri': "https://www.autoactionhub.com/home",
     'scope': 'https://www.googleapis.com/auth/userinfo.email',
     'client_id': CLIENT_ID,
     'prompt': 'consent'
@@ -42,8 +45,6 @@ REQ_URI = CLIENT.prepare_request_uri(
     scope=DATA['scope'],
     prompt=DATA['prompt']
 )
-
-
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -69,6 +70,33 @@ class Vote(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     vote_type = db.Column(db.String(10), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+class SiteData(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    visit_count = db.Column(db.Integer, default=0)
+
+def increment_visit_count():
+    with app.app_context():
+        site_data = SiteData.query.first()
+        if not site_data:
+            site_data = SiteData(visit_count=0)
+            db.session.add(site_data)
+        site_data.visit_count += 1
+        db.session.commit()
+
+
+@app.before_request
+def count_visitors():
+    increment_visit_count()
+
+@app.route('/visitor_count')
+def visitor_count():
+    site_data = SiteData.query.first()
+    if site_data:
+        return jsonify(count=site_data.visit_count)
+    return jsonify(count=0)
+
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -170,7 +198,7 @@ def delete_post(post_id):
         Vote.query.filter_by(post_id=post_id).delete()
         db.session.delete(post)
         db.session.commit()
-    return redirect('/dashboard')
+    return redirect('/')
 
 
 @app.route('/post/<int:post_id>/upvote', methods=['POST'])
@@ -184,7 +212,7 @@ def upvote(post_id):
     if existing_vote:
         # If the user had previously upvoted, do nothing
         if existing_vote.vote_type == 'upvote':
-            return redirect('/dashboard')
+            return redirect('/')
         # If the user had previously downvoted, remove the downvote
         else:
             post.downvotes -= 1
@@ -194,7 +222,7 @@ def upvote(post_id):
         vote = Vote(post_id=post_id, user_id=user_id, vote_type='upvote')
         db.session.add(vote)
     db.session.commit()
-    return redirect('/dashboard')
+    return redirect('/')
 
 
 @app.route('/post/<int:post_id>/downvote', methods=['POST'])
@@ -208,7 +236,7 @@ def downvote(post_id):
     if existing_vote:
         # If the user had previously downvoted, do nothing
         if existing_vote.vote_type == 'downvote':
-            return redirect('/dashboard')
+            return redirect('/')
         # If the user had previously upvoted, remove the upvote
         else:
             post.upvotes -= 1
@@ -218,7 +246,7 @@ def downvote(post_id):
         vote = Vote(post_id=post_id, user_id=user_id, vote_type='downvote')
         db.session.add(vote)
     db.session.commit()
-    return redirect('/dashboard')
+    return redirect('/')
 
 
 @app.route('/logout')
@@ -262,9 +290,9 @@ def delete_posts_by_email(email):
         Vote.query.filter_by(post_id=post.id).delete()
         db.session.delete(post)
     db.session.commit()
-    return redirect('/dashboard')
+    return redirect('/')
 
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(debug=True, host='0.0.0.0', port=5001, ssl_context='adhoc')
+    app.run(debug=True, host='0.0.0.0', port=5001,  ssl_context=('./your_domain.pem', './your_private.key') ) #, ssl_context='adhoc' ,  ssl_context=('./crt.pem', './key.pem')
